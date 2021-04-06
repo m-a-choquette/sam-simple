@@ -1,0 +1,44 @@
+openapi: "3.0.1"
+info:
+  title: "sam-simple"
+  version: "1.0"
+servers:
+# TODO: parametrize the url
+- url: "https://jayk6jro4k.execute-api.ca-central-1.amazonaws.com/Prod/"
+
+paths:
+  /hello:
+    get:
+      description: Say hello
+      responses:
+        200:
+          description: Hello
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloSchema'
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations"
+        httpMethod: "POST"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+x-amazon-apigateway-request-validators:
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+  params:
+    validateRequestBody: false
+    validateRequestParameters: true
+  params-and-body:
+    validateRequestBody: true
+    validateRequestParameters: true
+# By default, only the params (query params & headers will be validated)
+x-amazon-apigateway-request-validator: "params"
+components:
+  schemas:
+    HelloSchema:
+      type: object
+      properties:
+        message:
+          type: string
