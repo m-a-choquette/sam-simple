@@ -36,6 +36,22 @@ Resources:
 #            Path: /hello
 #            Method: get
 
+  HelloWorldFunctionHelloWorldPermissiondev:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      FunctionName:
+        Ref: HelloWorldFunction
+      SourceArn:
+        Fn::Sub:
+          - arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${__ApiId__}/${__Stage__}/${__Method__}/${__Path__}
+          - __Stage__: "*"
+            __Method__: "*"
+            __Path__: "*"
+            __ApiId__:
+              Ref: Api
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
