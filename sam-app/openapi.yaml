@@ -4,7 +4,7 @@ info:
   version: "1.0"
 servers:
 # TODO: parametrize the url
-- url: "https://jayk6jro4k.execute-api.ca-central-1.amazonaws.com/Prod/"
+- url: "TODO"
 
 paths:
   /hello:
