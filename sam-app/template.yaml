@@ -20,6 +20,11 @@ Resources:
           Name: AWS::Include
           Parameters:
             Location: ./openapi.yaml
+      MethodSettings:
+        - LoggingLevel: INFO
+          ResourcePath: '/*' # allows for logging on any resource
+          HttpMethod: '*' # allows for logging on any method
+          MetricsEnabled: true
 
 
   HelloWorldFunction:
